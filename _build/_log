@@ -1,4 +1,0 @@
-### Starting build.
-# Target: lexer.mll, tags: { extension:mll, file:lexer.mll, lexer, ocaml, ocamllex, quiet, traverse }
-/home/vagrant/.opam/4.08.1/bin/ocamllex.opt -q lexer.mll
-# Compilation successful.
