@@ -1,5 +1,4 @@
-(y States (R0 << (1 + (R1 >> x))));
-R0<<2;
+y States (R0 << (1 + (R1 >> x)));
 R1<<1;
-(Call y);
+Call y;
 R0>>a

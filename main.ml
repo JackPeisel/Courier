@@ -1,7 +1,7 @@
 let () =
   let _ =
     if Array.length Sys.argv <> 2 then
-      (Printf.printf "Usage: imp <file>\n";
+      (Printf.printf "Usage: ./cr <file>\n";
        exit 0) in
   let filename = Sys.argv.(1) in
   let lexbuf = 

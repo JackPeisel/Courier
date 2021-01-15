@@ -1,0 +1,1 @@
+hd ((1::Empty) :: Empty)

@@ -36,24 +36,45 @@ let error lexbuf msg =
 
 let int = ['-']?['0'-'9']
 let id = ['a'-'z'] ['a'-'z' '0'-'9']*
+let typ = ['A'-'Z'] ['a'-'z' '0'-'9']*
+let typList = typ (" List" | " List.")
+let multiList = typList* (" List" | " List.")
+let typeStar = (typ '*') | (typList '*') | (multiList '*')
+let typestarmore= typeStar | (typeStar '*')
+let multiStar = typestarmore+ (typ | typList | multiList |typestarmore)
 let reg = ['R'] ['0'-'9']
 let white = [' ' '\t']
+let md = ['a'-'z'] | ['A'-'Z'] | ['0'-'9'] | ['_'] | ['-'] | ['?'] | ['!'] | ['+'] | ['-'] | ['/']
+let st = '"' md* '"'
 
 rule token = parse
   | white   {token lexbuf}
   | '\n'    { newline lexbuf; token lexbuf }
+  | '''     {ARB}
+  | st {STRING(Lexing.lexeme lexbuf)}
   | "true"  { TRUE }
   | "false" { FALSE }
+  | "import" {IMPORT}
+  | "Empty" {EMPTY}
   | "+"     { PLUS }
   | "-"     {MINUS}
   | "*"     {TIMES}
+  | "&&"   {AND}
+  | "||"    {OR}
+  | "|"     {LINES}
   | "("     {LPAREN}
   | ")"     {RPAREN}
   | "{"     {LBRACE}
   | "}"     {RBRACE}
+  | "["     {LBRACK}
+  | "]"     {RBRACK}
   | ":="    {ASSIGN}
   | "=="    {EQUALS}
   | "!="    {NOTEQUALS}
+  | "!"     {NOT}
+  | "To"    {TO}
+  | "Default"  {DEFAULT}
+  | "@"     {APPEND}
   | "::"    {CONS}
   | "hd"    {HD}
   | "tl"    {TL}
@@ -63,16 +84,35 @@ rule token = parse
   | "then"  {THEN}
   | "else"  {ELSE}
   | "skip"  {SKIP}
+  | "match" {MATCH}
+  | "with"  {WITH}
+  | "of"    {OF}
+  | "fun"   {FUN}
+  | "for"   {FOR}
   | id      { VAR (Lexing.lexeme lexbuf) }
   | int     { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | reg     { REG (Lexing.lexeme lexbuf) }
   | "Call"  {CALL}
   | "States" {STATE}
+  | "Carries" {CARRY}
+  | "Inspect" {INSPECT}
   | "<<"    {STORE}
   | ">>"    {LOAD}
+  | ">"     {GT}
+  | "<"     {LT}
+  | "SetT"  {SETT}
+  | "RemT"  {REMT}
+  | "->"    {TO}
+  | "Object" {OBJECT}
+  | "Type"  {NEWTYPE}
   | "Set"   {SET}
   | "Do"    {DO}
   | ","     {COMMA}
+  | "."     {PERIOD}
   | "Let"   {LET}
   | "ON"    {ON}
+  | ":"     {COLON}
+  | "List"  {LIST}
+  | "A'"    {TYPE (Lexing.lexeme lexbuf) }
+  | typ     {TYPE (Lexing.lexeme lexbuf) }
   | eof     {EOF}

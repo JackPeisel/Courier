@@ -1,0 +1,1 @@
+match (1::Empty) with Int: 3 | Int List: 2 | Bool: 4

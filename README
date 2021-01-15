@@ -4,6 +4,9 @@ the command /.cr [FILENAME].
 If make clean is ran, there are only the .ml, parser.mly, and lexer.mll files, or someeone wishes to manually build to the state provided here then you
 can perform the following steps:
 
+(I appologize for not streamlining the build process, other features have been taking up 
+ more of my attention, and I actually got used to building it this way)
+
 Run these commands in the command line:
 
 ocamlbuild -use-menhir -no-hygiene parser.ml
@@ -13,5 +16,6 @@ Then move parser.ml, parser.mli, and lexer.ml out of _build and into the main
 directory where the other .ml files are (eval, ast, etc).
 
 Now run make.
+
 
 This should get the system to the state it is when downloaded as a zip on cms.
